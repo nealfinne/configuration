@@ -12,13 +12,16 @@
 - name: create projects directory
   sudo: yes
   sudo_user: neal
-  command: mkdir -p ~/Projects
+  file:
+    path: ~/Projects
+    state: directory
 - name: check out configuration repo
   sudo: yes
   sudo_user: neal
   git:
     repo: https://github.com/nealfinne/configuration.git
     dest: ~/Projects/configuration
+    update: no
 
 - name: install jdk
   apt: pkg=default-jdk state=present
