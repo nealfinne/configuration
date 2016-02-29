@@ -1,0 +1,15 @@
+---
+- name: install git
+  apt: pkg=git state=present
+  tags: dev
+- name: configure git
+  sudo: yes
+  sudo_user: neal
+  command: git config --global {{ item }}
+  with_items:
+    - user.name "Neal Finne"
+    - user.email "neal@nealfinne.com"
+
+- name: install jdk
+  apt: pkg=default-jdk state=present
+  tags: dev

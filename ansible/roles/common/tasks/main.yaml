@@ -1,0 +1,78 @@
+---
+- name: update apt package cache
+  apt: update_cache=yes cache_valid_time=3600
+  tags: apt security
+- name: ensure aptitude is present
+  apt: pkg=aptitude state=present
+  tags: apt security
+- name: use apt to update packages
+  apt: upgrade=safe
+  tags: apt security
+
+- name: ensure ntp is present
+  apt: pkg=ntp state=present
+  tags: ntp ntpd
+
+- name: ensure sshd is present
+  apt: pkg=openssh-server state=present
+  tags: ssh sshd security
+- name: disallow password authentication
+  lineinfile: dest=/etc/ssh/sshd_config
+              regexp="^PasswordAuthentication\s"
+              line="PasswordAuthentication no"
+              state=present
+  notify: restart sshd
+  tags: ssh sshd security
+- name: disallow root login
+  lineinfile: dest=/etc/ssh/sshd_config
+              regexp="^PermitRootLogin\s"
+              line="PermitRootLogin no"
+              state=present
+  notify: restart sshd
+  tags: ssh sshd security
+
+- name: ensure unattended-upgrades is present
+  apt: pkg=unattended-upgrades state=present
+  tags: unattended-upgrades security
+- name: enable Update-Package-Lists
+  lineinfile: dest=/etc/apt/apt.conf.d/20auto-upgrades
+              regexp='^APT::Periodic::Update-Package-Lists '
+              line='APT::Periodic::Update-Package-Lists "1";'
+              state=present
+              create=yes
+  tags: unattended-upgrades security
+- name: enable Unattended-Upgrade
+  lineinfile: dest=/etc/apt/apt.conf.d/20auto-upgrades
+              regexp='^APT::Periodic::Unattended-Upgrade '
+              line='APT::Periodic::Unattended-Upgrade "1";'
+              state=present
+              create=yes
+  tags: unattended-upgrades security
+
+- name: ensure ufw is installed
+  apt: pkg=ufw state=present
+  tags: ufw firewall security
+- name: deny requests
+  ufw: state=enabled policy=deny
+  tags: ufw firewall security
+- name: allow ssh traffic
+  ufw: rule=allow port=22 proto=tcp
+  tags: ufw firewall security
+
+- name: ensure fail2ban is present
+  apt: pkg=fail2ban state=present
+  tags: fail2ban security
+
+- name: ensure vim is present
+  apt: pkg=vim state=present
+  tags: vim editor
+- name: set vim as default text editor
+  alternatives: name=editor path=/usr/bin/vim.basic
+  tags: vim editor
+
+- name: ensure user neal is present
+  user: name=neal state=present shell=/bin/bash password="$6$SPt49L.t$8q4q5hINiPsMFEOHYBTP9AvGjMpKdSncKZ09sn8SWjq5O9AA0hEsNBvfheYUVoV/qyhL0TH1kMm/4XQkwWjbV."
+  tags: users neal
+- name: add authorized key for user neal
+  authorized_key: user=neal key="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDP2SmUbxw7YUfezD5i238AIoSSnmc0fftGVC/O5xDGO+DnkwQbtWyi6xbo5rzxICXyXUngPe3rEb+VY1wZQNqBVL1ilNtDqwd0h+jWXMxT5G1hpMm3UmlVve2Yl3KN0PGAHn4pmhLHR1FDG8LpGQseLlDkPq5wh6lHIoLx6mND0UrCpy/vsw8EpDUyhqog0t0kVjM3rRVO/H57Osk3o+9nbskzNUSJclx/LSwxTJLYWE8ZvHU8MlSgpMiXWHg9tWoLp910IEQD2YCDaJM7fw5yS64qwBVap0jzQ5eUQiBsK4myWKsTbv/BXziK4FLGZZp/Cx4HR0FTVJkr0dm4dXxJ neal@polonius"
+  tags: users neal

@@ -1,0 +1,9 @@
+---
+- hosts: all
+  sudo: true
+  roles:
+    - common
+- hosts: default
+  sudo: true
+  roles:
+    - dev

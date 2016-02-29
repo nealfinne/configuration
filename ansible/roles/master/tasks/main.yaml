@@ -1,0 +1,3 @@
+---
+- name: ensure ansible is present
+  apt: pkg=ansible state=present
