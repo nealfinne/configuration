@@ -26,3 +26,16 @@
 - name: install jdk
   apt: pkg=default-jdk state=present
   tags: dev
+
+- name: install powerline
+  apt: pkg=powerline state=present
+  tags: dev
+- name: set up powerline for neal
+  sudo: yes
+  sudo_user: neal
+  lineinfile:
+    line: "{{ item }}"
+    dest: ~/.bashrc
+  with_items:
+    - powerline-daemon -q
+    - . /usr/share/powerline/bindings/bash/powerline.sh
