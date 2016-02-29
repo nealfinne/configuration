@@ -9,6 +9,7 @@
   with_items:
     - user.name "Neal Finne"
     - user.email "neal@nealfinne.com"
+    - push.default "simple"
 
 - name: create projects directory
   sudo: yes
