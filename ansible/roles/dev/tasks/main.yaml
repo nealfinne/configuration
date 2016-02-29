@@ -39,3 +39,12 @@
   with_items:
     - powerline-daemon -q
     - . /usr/share/powerline/bindings/bash/powerline.sh
+- name: configure powerline for neal
+  sudo: yes
+  sudo_user: neal
+  shell: "{{ item }}"
+  with_items:
+    - "mkdir -p ~/.config/"
+    - "[ -e /home/neal/.config/powerline ] || cp -r /usr/share/powerline/config_files/ /home/neal/.config/powerline/"
+    - "[ -e /home/neal/.config/powerline/themes/shell/default_leftright.json ] || mv /home/neal/.config/powerline/themes/shell/default.json /home/neal/.config/powerline/themes/shell/default_leftright.json"
+    - "[ -e /home/neal/.config/powerline/themes/shell/default.json ] || mv /home/neal/.config/powerline/themes/shell/default_leftonly.json /home/neal/.config/powerline/themes/shell/default.json"
