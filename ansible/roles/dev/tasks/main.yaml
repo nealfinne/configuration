@@ -9,6 +9,16 @@
   with_items:
     - user.name "Neal Finne"
     - user.email "neal@nealfinne.com"
+- name: create projects directory
+  sudo: yes
+  sudo_user: neal
+  command: mkdir -p ~/Projects
+- name: check out configuration repo
+  sudo: yes
+  sudo_user: neal
+  git:
+    repo: https://github.com/nealfinne/configuration.git
+    dest: ~/Projects/configuration
 
 - name: install jdk
   apt: pkg=default-jdk state=present
