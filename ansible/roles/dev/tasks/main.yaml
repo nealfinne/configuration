@@ -37,7 +37,7 @@
 
 - name: install powerline
   apt: pkg=powerline state=present
-  tags: dev
+  when: ansible_distribution == 'Debian'
 - name: set up powerline for neal
   sudo: yes
   sudo_user: neal
@@ -47,3 +47,4 @@
   with_items:
     - powerline-daemon -q
     - . /usr/share/powerline/bindings/bash/powerline.sh
+  when: ansible_distribution == 'Debian'
