@@ -67,13 +67,13 @@
     update: no
   when: not copy_ssh_private_key
 
-- name: install powerline with apt
+- name: install powerline (Debian)
   apt: pkg=powerline state=present
   when: ansible_distribution == 'Debian'
-- name: install powerline with pip
+- name: install powerline (Ubuntu)
   pip: name=powerline-status state=present
   when: ansible_distribution == 'Ubuntu'
-- name: set up powerline for neal
+- name: set up powerline for neal (Debian)
   sudo: yes
   sudo_user: neal
   lineinfile:
@@ -82,4 +82,14 @@
   with_items:
     - powerline-daemon -q
     - . /usr/share/powerline/bindings/bash/powerline.sh
-  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+  when: ansible_distribution == 'Debian'
+- name: set up powerline for neal (Ubuntu)
+  sudo: yes
+  sudo_user: neal
+  lineinfile:
+    line: "{{ item }}"
+    dest: ~/.bashrc
+  with_items:
+    - powerline-daemon -q
+    - . /usr/local/lib/python2.7/dist-packages/powerline/bindings/bash/powerline.sh
+  when: ansible_distribution == 'Ubuntu'
