@@ -1,10 +1,4 @@
 ---
-- name: update apt package cache
-  apt: update_cache=yes cache_valid_time=3600
-  tags: apt security
-- name: ensure aptitude is present
-  apt: pkg=aptitude state=present
-  tags: apt security
 - name: use apt to update packages
   apt: upgrade=safe
   tags: apt security

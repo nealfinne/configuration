@@ -2,11 +2,24 @@
 - name: configure git
   sudo: yes
   sudo_user: neal
-  command: git config --global {{ item }}
+  ini_file:
+    dest: ~/.gitrc
+    section: "{{ item.section }}"
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
   with_items:
-    - user.name "Neal Finne"
-    - user.email "neal@nealfinne.com"
-    - push.default "simple"
+    -
+      section: user
+      option: name
+      value: Neal Finne
+    -
+      section: user
+      option: email
+      value: neal@nealfinne.com
+    -
+      section: push
+      option: default
+      value: simple
 
 - name: create projects directory
   sudo: yes
@@ -34,12 +47,3 @@
   with_items:
     - powerline-daemon -q
     - . /usr/share/powerline/bindings/bash/powerline.sh
-- name: configure powerline for neal
-  sudo: yes
-  sudo_user: neal
-  shell: "{{ item }}"
-  with_items:
-    - "mkdir -p ~/.config/"
-    - "[ -e /home/neal/.config/powerline ] || cp -r /usr/share/powerline/config_files/ /home/neal/.config/powerline/"
-    - "[ -e /home/neal/.config/powerline/themes/shell/default_leftright.json ] || mv /home/neal/.config/powerline/themes/shell/default.json /home/neal/.config/powerline/themes/shell/default_leftright.json"
-    - "[ -e /home/neal/.config/powerline/themes/shell/default.json ] || mv /home/neal/.config/powerline/themes/shell/default_leftonly.json /home/neal/.config/powerline/themes/shell/default.json"
