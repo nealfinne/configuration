@@ -1,7 +1,11 @@
 ---
 - hosts:
-    - dev.okgreta.com
+    - all
   sudo: true
   roles:
     - common
+- hosts:
+    - dev
+  sudo: true
+  roles:
     - dev

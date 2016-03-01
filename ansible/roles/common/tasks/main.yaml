@@ -1,11 +1,21 @@
 ---
 - name: use apt to update packages
   apt: upgrade=safe
-  tags: apt security
+  tags: security update
 
 - name: ensure user neal is present
-  user: name=neal state=present shell=/bin/bash password="$6$SPt49L.t$8q4q5hINiPsMFEOHYBTP9AvGjMpKdSncKZ09sn8SWjq5O9AA0hEsNBvfheYUVoV/qyhL0TH1kMm/4XQkwWjbV."
-  tags: users neal
+  user:
+    name: neal
+    state: present
+    shell: /bin/bash
+  tags: neal
+- name: set password for user neal
+  user:
+    name: neal
+    state: present
+    password: "$6$SPt49L.t$8q4q5hINiPsMFEOHYBTP9AvGjMpKdSncKZ09sn8SWjq5O9AA0hEsNBvfheYUVoV/qyhL0TH1kMm/4XQkwWjbV."
+  when: set_neal_password
+  tags: neal
 - name: add authorized key for user neal
   authorized_key: user=neal key="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDP2SmUbxw7YUfezD5i238AIoSSnmc0fftGVC/O5xDGO+DnkwQbtWyi6xbo5rzxICXyXUngPe3rEb+VY1wZQNqBVL1ilNtDqwd0h+jWXMxT5G1hpMm3UmlVve2Yl3KN0PGAHn4pmhLHR1FDG8LpGQseLlDkPq5wh6lHIoLx6mND0UrCpy/vsw8EpDUyhqog0t0kVjM3rRVO/H57Osk3o+9nbskzNUSJclx/LSwxTJLYWE8ZvHU8MlSgpMiXWHg9tWoLp910IEQD2YCDaJM7fw5yS64qwBVap0jzQ5eUQiBsK4myWKsTbv/BXziK4FLGZZp/Cx4HR0FTVJkr0dm4dXxJ neal@polonius"
-  tags: users neal
+  tags: neal
