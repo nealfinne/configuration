@@ -21,19 +21,50 @@
       option: default
       value: simple
 
+- name: create .ssh directory
+  sudo: yes
+  sudo_user: neal
+  file:
+     path: ~/.ssh
+     state: directory
+     mode: 0700
+  when: copy_ssh_private_key
+- name: copy ssh private key
+  sudo: yes
+  sudo_user: neal
+  copy:
+     src: ~/.ssh/id_rsa
+     dest: ~/.ssh/id_rsa
+     mode: 0700
+  when: copy_ssh_private_key
 - name: create projects directory
   sudo: yes
   sudo_user: neal
   file:
     path: ~/Projects
     state: directory
-- name: check out configuration repo
+- name: add github.com to known_hosts
+  sudo: yes
+  sudo_user: neal
+  lineinfile:
+    dest: ~/.ssh/known_hosts
+    line: "|1|L0/xKEbyVnnBqbUn+9ydO8CqHS0=|9B4WzQG2tatZLw9Yt9R2vXcMbS4= ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ=="
+- name: check out configuration repo using ssh
+  sudo: yes
+  sudo_user: neal
+  git:
+    repo: git@github.com:nealfinne/configuration.git
+    dest: ~/Projects/configuration
+    update: no
+  when: copy_ssh_private_key
+- name: check out configuration repo using https
   sudo: yes
   sudo_user: neal
   git:
     repo: https://github.com/nealfinne/configuration.git
     dest: ~/Projects/configuration
     update: no
+  when: not copy_ssh_private_key
 
 - name: install powerline with apt
   apt: pkg=powerline state=present
