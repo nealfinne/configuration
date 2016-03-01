@@ -3,7 +3,7 @@
   sudo: yes
   sudo_user: neal
   ini_file:
-    dest: ~/.gitrc
+    dest: ~/.gitconfig
     section: "{{ item.section }}"
     option: "{{ item.option }}"
     value: "{{ item.value }}"
