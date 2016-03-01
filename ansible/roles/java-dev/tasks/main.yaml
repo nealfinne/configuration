@@ -1,0 +1,13 @@
+---
+- name: install jdk
+  apt: pkg=default-jdk state=present
+  tags: dev java
+- name: install gradle
+  apt: pkg=gradle state=present
+  tags: dev java
+- name: enable gradle daemon for neal
+  sudo: yes
+  sudo_user: neal
+  lineinfile:
+    line: "org.gradle.daemon=true"
+    create: yes

@@ -1,7 +1,4 @@
 ---
-- name: install git
-  apt: pkg=git state=present
-  tags: dev
 - name: configure git
   sudo: yes
   sudo_user: neal
@@ -24,19 +21,6 @@
     repo: https://github.com/nealfinne/configuration.git
     dest: ~/Projects/configuration
     update: no
-
-- name: install jdk
-  apt: pkg=default-jdk state=present
-  tags: dev java
-- name: install gradle
-  apt: pkg=gradle state=present
-  tags: dev java
-- name: enable gradle daemon for neal
-  sudo: yes
-  sudo_user: neal
-  lineinfile:
-    line: "org.gradle.daemon=true"
-    create: yes
 
 - name: install powerline
   apt: pkg=powerline state=present

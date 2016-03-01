@@ -1,0 +1,7 @@
+---
+- name: ensure vim is present
+  apt: pkg=vim state=present
+  tags: vim editor
+- name: set vim as default text editor
+  alternatives: name=editor path=/usr/bin/vim.basic
+  tags: vim editor
