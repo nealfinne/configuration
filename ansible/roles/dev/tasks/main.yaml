@@ -35,9 +35,12 @@
     dest: ~/Projects/configuration
     update: no
 
-- name: install powerline
+- name: install powerline with apt
   apt: pkg=powerline state=present
   when: ansible_distribution == 'Debian'
+- name: install powerline with pip
+  pip: name=powerline-status state=present
+  when: ansible_distribution == 'Ubuntu'
 - name: set up powerline for neal
   sudo: yes
   sudo_user: neal
@@ -47,4 +50,4 @@
   with_items:
     - powerline-daemon -q
     - . /usr/share/powerline/bindings/bash/powerline.sh
-  when: ansible_distribution == 'Debian'
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
