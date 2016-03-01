@@ -1,5 +1,6 @@
 ---
-- hosts: default
+- hosts:
+    - dev.okgreta.com
   sudo: true
   roles:
     - common

@@ -12,6 +12,8 @@ Vagrant.configure(2) do |config|
   end
 
   config.vm.provision :ansible do |ansible|
-    ansible.playbook = "ansible/site.yaml"
+    ansible.limit = "dev.okgreta.com"
+    ansible.inventory_path = "ansible/hosts"
+    ansible.playbook = "ansible/dev.okgreta.com.yaml"
   end
 end
