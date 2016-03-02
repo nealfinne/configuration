@@ -1,0 +1,4 @@
+---
+- name: install hg
+  apt: pkg=mercurial state=present
+  tags: dev
