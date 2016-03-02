@@ -42,3 +42,9 @@
     repo: https://bitbucket.org/ludovicchabant/vim-lawrencium
     dest: ~/.vim/bundle/vim-lawrencium
   tags: user_settings
+- name: install hgdiffmetrics
+  sudo_user: neal
+  pip:
+    pkg: hgdiffmetrics
+    state: latest
+  tags: user_settings
