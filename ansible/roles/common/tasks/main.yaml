@@ -8,6 +8,7 @@
     name: neal
     state: present
     shell: /bin/bash
+    groups: neal,sudo
   tags: neal
 - name: set password for user neal
   user:
