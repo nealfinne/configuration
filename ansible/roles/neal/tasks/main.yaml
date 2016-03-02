@@ -9,3 +9,26 @@
     - .vim
     - .vimrc
   tags: user_settings
+- name: check out pathogen
+  git:
+    repo: https://github.com/tpope/vim-pathogen
+    dest: ~/.vim
+    update: yes
+  tags: user_settings
+- name: check out python-mode
+  git:
+    repo: https://github.com/klen/python-mode
+    dest: ~/.vim/bundle/python-mode
+    update: yes
+  tags: user_settings
+- name: check out vim-colors-solarized
+  git:
+    repo: https://github.com/altercation/vim-colors-solarized
+    dest: ~/.vim/bundle/vim-colors-solarized
+    update: yes
+  tags: user_settings
+- name: check out vim-lawrencium
+  hg:
+    repo: https://bitbucket.org/ludovicchabant/vim-lawrencium
+    dest: ~/.vim/bundle/vim-lawrencium
+  tags: user_settings
