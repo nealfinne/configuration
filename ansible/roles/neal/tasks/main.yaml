@@ -12,7 +12,7 @@
 - name: check out pathogen
   git:
     repo: https://github.com/tpope/vim-pathogen
-    dest: ~/.vim
+    dest: ~/.vim/bundle/vim-pathogen
     update: yes
   tags: user_settings
 - name: check out python-mode
