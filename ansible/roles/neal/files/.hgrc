@@ -1,0 +1,33 @@
+[extensions]
+color =
+graphlog =
+histedit =
+mq =
+pager =
+rebase =
+children =
+extdiff =
+purge =
+shelve =
+hgdiffmetrics =
+
+[pager]
+pager = LESS='FRX' less
+
+[auth]
+esv.prefix = ssh://repo.evoworx.org/
+
+[ui]
+username = Neal Finne <neal@nealfinne.com>
+merge = meld
+ignore = ~/.hgignore
+
+[merge-tools]
+vimdiff.args = -d $base $local $output $other -c "wincmd J"
+meld.args = $local $base $other -o $output --auto-merge
+
+[hooks]
+pretxncommit = python:hgdiffmetrics.hooks.check_commit
+
+[hgdiffmetrics]
+exclude = **/migrations

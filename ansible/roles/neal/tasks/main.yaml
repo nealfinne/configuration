@@ -1,0 +1,11 @@
+---
+- name: copy user settings
+  copy:
+    src: files/{{ item }}
+    dest: ~/{{ item }}
+  with_items:
+    - .hgignore
+    - .hgrc
+    - .vim
+    - .vimrc
+  tags: user_settings
