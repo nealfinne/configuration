@@ -1,5 +1,7 @@
 ---
 - name: copy user settings
+  sudo: yes
+  sudo_user: neal
   copy:
     src: "{{ item }}"
     dest: ~/{{ item }}
@@ -10,24 +12,32 @@
     - .vimrc
   tags: user_settings
 - name: check out pathogen
+  sudo: yes
+  sudo_user: neal
   git:
     repo: https://github.com/tpope/vim-pathogen
     dest: ~/.vim/bundle/vim-pathogen
     update: yes
   tags: user_settings
 - name: check out python-mode
+  sudo: yes
+  sudo_user: neal
   git:
     repo: https://github.com/klen/python-mode
     dest: ~/.vim/bundle/python-mode
     update: yes
   tags: user_settings
 - name: check out vim-colors-solarized
+  sudo: yes
+  sudo_user: neal
   git:
     repo: https://github.com/altercation/vim-colors-solarized
     dest: ~/.vim/bundle/vim-colors-solarized
     update: yes
   tags: user_settings
 - name: check out vim-lawrencium
+  sudo: yes
+  sudo_user: neal
   hg:
     repo: https://bitbucket.org/ludovicchabant/vim-lawrencium
     dest: ~/.vim/bundle/vim-lawrencium
