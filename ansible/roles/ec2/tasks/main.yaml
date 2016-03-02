@@ -1,0 +1,20 @@
+---
+- name: provision instances
+  ec2:
+    key_name: neal
+    region: us-west-2
+    image: ami-3d56520d
+    instance_type: "{{ instance_type }}"
+    count_tag:
+      Name: {{ tag }}
+    exact_count: "{{ count }}"
+    instance_tags:
+      Name: {{ tag }}
+    group: {{ security_group }}
+  register: ec2
+- name: add all public instance ip addresses to host group
+  add_host: hostname={{ item.public_dns_name }} groups=ec2hosts
+  with_items: ec2.tagged_instances
+- name: wait for ssh to come up
+  local_action: wait_for host={{ item.public_dns_name }} port=22 state=started
+  with_items: ec2.tagged_instances

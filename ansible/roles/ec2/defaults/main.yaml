@@ -1,0 +1,5 @@
+---
+instance_type: t2.nano
+count: 1
+security_group: master
+tag: master
