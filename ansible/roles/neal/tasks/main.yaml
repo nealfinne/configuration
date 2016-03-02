@@ -1,7 +1,7 @@
 ---
 - name: copy user settings
   copy:
-    src: files/{{ item }}
+    src: "{{ item }}"
     dest: ~/{{ item }}
   with_items:
     - .hgignore
