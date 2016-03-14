@@ -11,3 +11,4 @@
   lineinfile:
     line: "org.gradle.daemon=true"
     create: yes
+    dest: /home/neal/.gradle/gradle.properties
